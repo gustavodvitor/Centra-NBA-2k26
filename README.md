@@ -2,7 +2,7 @@
 
 Aplicação web full stack que permite consultar jogadores reais da NBA, criar avaliações personalizadas inspiradas no sistema de atributos do **NBA 2K26** e montar uma lista de jogadores favoritos.
 
-Projeto desenvolvido para a disciplina de Projeto Final, atendendo aos critérios de aplicação web com frontend e backend separados, comunicação via HTTP, CRUD completo com persistência em banco de dados e versionamento em repositório público.
+Projeto Final desenvolvido para a disciplina de XDES03– Programação Web, atendendo aos critérios de aplicação web com frontend e backend separados, comunicação via HTTP, CRUD completo com persistência em banco de dados e versionamento em repositório público.
 
 ---
 

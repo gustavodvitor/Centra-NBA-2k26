@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+
 import { useAuth } from "../context/AuthContext.jsx";
+
+const HOME_ROUTE = "/";
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/jogadores";
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,9 +18,10 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
       await login(email, password);
-      navigate(from, { replace: true });
+      navigate(HOME_ROUTE, { replace: true });
     } catch (err) {
       setError(err.response?.data?.error || "Não foi possível entrar. Tente novamente.");
     } finally {

@@ -1,0 +1,40 @@
+:root {
+  /* Cores - inspiradas em quadra de madeira + scoreboard noturno */
+  --bg: #14151a;
+  --surface: #1e2027;
+  --surface-alt: #262932;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --text-primary: #f5f3ee;
+  --text-muted: #9a9ca5;
+
+  --accent: #e2772e;       /* laranja madeira/bola de basquete */
+  --accent-strong: #ff8c3d;
+  --accent-teal: #2ec4b6;  /* destaque secundario, quadra */
+  --danger: #e5484d;
+
+  /* Faixas de overall, como no 2K */
+  --tier-bronze: #a9745c;
+  --tier-silver: #c7ccd6;
+  --tier-gold: #f2c14e;
+  --tier-galaxy: #b388ff;
+
+  /* Tipografia */
+  --font-display: "Anton", "Oswald", sans-serif;
+  --font-heading: "Oswald", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+
+  /* Espacamento */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.5rem;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.35);
+}

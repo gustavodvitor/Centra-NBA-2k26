@@ -1,0 +1,4 @@
+O arquivo central.db é criado automaticamente nesta pasta quando o
+servidor backend roda pela primeira vez (veja src/db.js). Ele não é
+versionado no git (está no .gitignore) porque é dado local de cada
+ambiente.

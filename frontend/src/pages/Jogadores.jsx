@@ -1,25 +1,52 @@
 import { useEffect, useState } from "react";
-import api from "../services/api.js";
+
 import PlayerCard from "../components/PlayerCard.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import api from "../services/api.js";
 
 export default function Jogadores() {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [players, setPlayers] = useState([]);
+  const [averageByPlayerId, setAverageByPlayerId] = useState(new Map());
   const [favoriteIds, setFavoriteIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  async function loadPlayerAverages(nextPlayers) {
+    if (nextPlayers.length === 0) {
+      setAverageByPlayerId(new Map());
+      return;
+    }
+
+    const entries = await Promise.all(
+      nextPlayers.map(async (player) => {
+        try {
+          const { data } = await api.get(`/reviews/player/${player.id}`);
+          return [player.id, data.average ?? null];
+        } catch {
+          return [player.id, null];
+        }
+      }),
+    );
+
+    setAverageByPlayerId(new Map(entries));
+  }
+
   async function loadPlayers(term) {
     setLoading(true);
     setError("");
+
     try {
       const { data } = await api.get("/players", { params: { search: term } });
-      setPlayers(data.data || []);
+      const nextPlayers = data.data || [];
+
+      setPlayers(nextPlayers);
+      await loadPlayerAverages(nextPlayers);
     } catch (err) {
       setError(err.response?.data?.error || "Erro ao buscar jogadores.");
       setPlayers([]);
+      setAverageByPlayerId(new Map());
     } finally {
       setLoading(false);
     }
@@ -30,6 +57,7 @@ export default function Jogadores() {
       setFavoriteIds(new Set());
       return;
     }
+
     try {
       const { data } = await api.get("/favorites");
       setFavoriteIds(new Set(data.map((f) => f.player_id)));
@@ -54,7 +82,9 @@ export default function Jogadores() {
       setError("Faça login para favoritar jogadores.");
       return;
     }
+
     const isFav = favoriteIds.has(player.id);
+
     try {
       if (isFav) {
         await api.delete(`/favorites/${player.id}`);
@@ -80,6 +110,7 @@ export default function Jogadores() {
   return (
     <main className="section">
       <h1>Jogadores</h1>
+
       <form className="search-bar" onSubmit={handleSubmit}>
         <input
           type="search"
@@ -104,7 +135,7 @@ export default function Jogadores() {
             <PlayerCard
               key={player.id}
               player={player}
-              average={null}
+              average={averageByPlayerId.get(player.id) ?? null}
               isFavorite={favoriteIds.has(player.id)}
               onToggleFavorite={toggleFavorite}
             />
